@@ -1,0 +1,45 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+<title>Local Weather</title>
+<link rel="stylesheet" href="css/styles.css">
+  <meta charset="utf-8">
+</head>
+
+<body>
+    <div class="title">Your Local Weather</div>
+    
+    <div id="weather"></div>
+    
+    
+    <script>
+        
+    var key="f19cee9398f6d150ea4f069baa624eb8";
+        
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=' + key, true);
+
+        request.onload = function() {
+          if (request.status >= 200 && request.status < 400) {
+            // Success!
+            var resp = request.responseText;
+              console.log(resp);
+          } 
+            else 
+            {
+                console.log("error");
+
+          }
+        };
+
+        request.onerror = function() {
+          // There was a connection error of some sort
+        };
+
+        request.send(null);
+
+    
+    </script>
+</body>
+</html>
