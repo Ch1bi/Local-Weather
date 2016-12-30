@@ -14,17 +14,24 @@
     
     
     <script>
+    //var key="f19cee9398f6d150ea4f069baa624eb8";
+    //var url1="http://api.openweathermap.org/data/2.5/weather?id=2172797&APPID=f19cee9398f6d150ea4f069baa624eb8";
+    //var url2="http://ip-api.com/json";
+    var urls = ["http://ip-api.com/json","http://api.openweathermap.org/data/2.5/weather?id=2172797&APPID=f19cee9398f6d150ea4f069baa624eb8"];
         
-    var key="f19cee9398f6d150ea4f069baa624eb8";
+    var request = new XMLHttpRequest();
         
-        var request = new XMLHttpRequest();
-        request.open('GET', 'http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=' + key, true);
+        for(var i = 0; i < urls.length; i++)
+        {
+        request.open('GET', urls[i], true);
+        request.send(null);
 
         request.onload = function() {
           if (request.status >= 200 && request.status < 400) {
             // Success!
             var resp = request.responseText;
               console.log(resp);
+              //if response is sucessful, do another request to get weather based on results
           } 
             else 
             {
@@ -36,8 +43,8 @@
         request.onerror = function() {
           // There was a connection error of some sort
         };
+        }
 
-        request.send(null);
 
     
     </script>
