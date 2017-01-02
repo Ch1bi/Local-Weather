@@ -9,9 +9,12 @@
 </head>
 
 <body>
-    <div class="title">Your Local Weather</div>
+    <div class="title">Your Local Weather in - </div>
     
     <div id="weather"></div>
+    
+    <div id="icon"></div>
+    
     
     
     <script>
@@ -20,6 +23,13 @@
         
         console.log("document loaded successfully");
         var zipcode;
+        var country;
+        var city;
+        var kelvin;
+        var fahrenheit;
+        var weather;
+        var iconUrl = "http://openweathermap.org/img/w/" + weather + ".png";
+
         $.ajax(
             {
                 type:"GET",
@@ -29,8 +39,12 @@
                 async:true,
                 success:function(response)
                 {
-                    console.log(response);
                     zipcode = response.zip;
+                    country = response.country;
+                    city = response.city;
+                    console.log(zipcode);
+                    console.log(country);
+                    console.log(response.city);
   
                 }
             });
@@ -39,19 +53,24 @@
             {
                 type:"GET",
                 dataType:"json",
-                url:"http://api.openweathermap.org/data/2.5/weather?id=2172797&APPID=f19cee9398f6d150ea4f069baa624eb8",
+                url:"http://api.openweathermap.org/data/2.5/weather?zip=" + zipcode + country + "&APPID=f19cee9398f6d150ea4f069baa624eb8",
                 cache:false,
                 async:true,
                 success:function(response)
                 {
                     console.log(response);
+                    kelvin = response.main.temp;
+                    fahrenheit = Math.round((1.8*(kelvin - 273) + 32));
+                    console.log(fahrenheit);
+                    console.log(kelvin);
+                    weather = response.weather[0].icon;
+                    console.log(weather);
+                    $(".title").append(city);
+                    $("#weather").text(fahrenheit);
+                    $("#icon").html("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png' alt='Icon depicting current weather.'>");
                 }
             });
     });
-    //var key="f19cee9398f6d150ea4f069baa624eb8";
-    //var url1="http://api.openweathermap.org/data/2.5/weather?id=2172797&APPID=f19cee9398f6d150ea4f069baa624eb8";
-    //var url2="http://ip-api.com/json";
-    var urls = ["http://ip-api.com/json","http://api.openweathermap.org/data/2.5/weather?id=2172797&APPID=f19cee9398f6d150ea4f069baa624eb8"];
     </script>
     
 </body>
