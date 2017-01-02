@@ -3,7 +3,8 @@
 <html lang="en">
 <head>
 <title>Local Weather</title>
-<link rel="stylesheet" href="css/styles.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" href="style.css">
   <meta charset="utf-8">
 </head>
 
@@ -14,39 +15,44 @@
     
     
     <script>
+    $(document).ready(function()
+                      {
+        
+        console.log("document loaded successfully");
+        var zipcode;
+        $.ajax(
+            {
+                type:"GET",
+                dataType:"json",
+                url:"http://ip-api.com/json",
+                cache:false,
+                async:true,
+                success:function(response)
+                {
+                    console.log(response);
+                    zipcode = response.zip;
+  
+                }
+            });
+        
+        $.ajax(
+            {
+                type:"GET",
+                dataType:"json",
+                url:"http://api.openweathermap.org/data/2.5/weather?id=2172797&APPID=f19cee9398f6d150ea4f069baa624eb8",
+                cache:false,
+                async:true,
+                success:function(response)
+                {
+                    console.log(response);
+                }
+            });
+    });
     //var key="f19cee9398f6d150ea4f069baa624eb8";
     //var url1="http://api.openweathermap.org/data/2.5/weather?id=2172797&APPID=f19cee9398f6d150ea4f069baa624eb8";
     //var url2="http://ip-api.com/json";
     var urls = ["http://ip-api.com/json","http://api.openweathermap.org/data/2.5/weather?id=2172797&APPID=f19cee9398f6d150ea4f069baa624eb8"];
-        
-    var request = new XMLHttpRequest();
-        
-        for(var i = 0; i < urls.length; i++)
-        {
-        request.open('GET', urls[i], true);
-        request.send(null);
-
-        request.onload = function() {
-          if (request.status >= 200 && request.status < 400) {
-            // Success!
-            var resp = request.responseText;
-              console.log(resp);
-              //if response is sucessful, do another request to get weather based on results
-          } 
-            else 
-            {
-                console.log("error");
-
-          }
-        };
-
-        request.onerror = function() {
-          // There was a connection error of some sort
-        };
-        }
-
-
-    
     </script>
+    
 </body>
 </html>
