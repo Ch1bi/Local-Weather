@@ -8,25 +8,26 @@
   <meta charset="utf-8">
 </head>
 
-<body>
+<body>  
+    <section>
     <div class="title">Your Local Weather in - </div>
-    
     <div id="weather"></div>
-    
     <div id="icon"></div>
-    
-    
+    </section>
     
     <script>
     $(document).ready(function()
                       {
         
-        console.log("document loaded successfully");
+ 
+        var isCelsius = false;
+        
         var zipcode;
         var country;
         var city;
         var kelvin;
         var fahrenheit;
+        var celsius;
         var weather;
         var iconUrl = "http://openweathermap.org/img/w/" + weather + ".png";
 
@@ -42,10 +43,7 @@
                     zipcode = response.zip;
                     country = response.country;
                     city = response.city;
-                    console.log(zipcode);
-                    console.log(country);
-                    console.log(response.city);
-  
+                   
                 }
             });
         
@@ -58,20 +56,51 @@
                 async:true,
                 success:function(response)
                 {
-                    console.log(response);
+                    
                     kelvin = response.main.temp;
+                    
                     fahrenheit = Math.round((1.8*(kelvin - 273) + 32));
-                    console.log(fahrenheit);
-                    console.log(kelvin);
+                    
                     weather = response.weather[0].icon;
-                    console.log(weather);
+        
+                    
                     $(".title").append(city);
-                    $("#weather").text(fahrenheit);
-                    $("#icon").html("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png' alt='Icon depicting current weather.'>");
+                    
+                    $("#weather").text(fahrenheit + "°F");
+                    
+                    $("#icon").html("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png' alt='icon depicting current weather.'>");
                 }
             });
+        
+        $("#weather").click(function()
+                            {
+            if(!isCelsius)
+            {
+                //perform fahrenheit to celsius conversion
+                celsius = Math.round((fahrenheit - 32) * 5/9);
+                
+                //display celcius on webpage
+                $("#weather").text(celsius + "°C");
+                
+                //set isCelsius to true
+                isCelsius = true;
+            }
+            
+            else if(isCelsius)
+            {
+                //perform celsius to fahrenheit conversion
+                fahrenheit = Math.round(celsius * 9/5 + 32);
+                
+                $("#weather").text(fahrenheit + "°F");
+                
+                //set isCelsius to true
+                isCelsius = false;
+            }
+        });
+        
     });
-    </script>
+    </script>    
     
 </body>
+    
 </html>
