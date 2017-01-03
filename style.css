@@ -1,6 +1,6 @@
 body
 {
-       
+    background-color: #5C3166;
 }
 
 section
@@ -14,20 +14,33 @@ section
 {
     align-self: center;
     margin-top: 2em;
-    font-size: 35px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 65px;
+    color:white;
 }
 
 #weather
 {
     align-self: center;
     font-size: 48px;
-    margin-top:0.5em;
+    margin-top: 0.5em;
     font-weight: 500;
+    color:white;
 }
 
 #icon
 {
     align-self: center;
+    margin-top:1em;
+}
+
+.weather_description
+{
+    
+    font-size: 20px;
+    align-self: center;
+    color:#55D897;
+    margin-top:1em;
 }
 
 

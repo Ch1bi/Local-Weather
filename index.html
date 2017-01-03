@@ -4,15 +4,19 @@
 <head>
 <title>Local Weather</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet"> 
 <link rel="stylesheet" href="style.css">
   <meta charset="utf-8">
 </head>
 
 <body>  
     <section>
-    <div class="title">Your Local Weather in - </div>
-    <div id="weather"></div>
+        <div class="title">Your Local Weather in </div>
+        
+    <div id="weather"> </div>
+        <span class="weather_description"></span>
     <div id="icon"></div>
+    
     </section>
     
     <script>
@@ -30,6 +34,7 @@
         var celsius;
         var weather;
         var iconUrl = "http://openweathermap.org/img/w/" + weather + ".png";
+        var description;
 
         $.ajax(
             {
@@ -62,6 +67,9 @@
                     fahrenheit = Math.round((1.8*(kelvin - 273) + 32));
                     
                     weather = response.weather[0].icon;
+                    
+                    description = response.weather[0].description;
+                    console.log(description);
         
                     
                     $(".title").append(city);
@@ -69,6 +77,8 @@
                     $("#weather").text(fahrenheit + "°F");
                     
                     $("#icon").html("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png' alt='icon depicting current weather.'>");
+                    
+                    $(".weather_description").text(description);
                 }
             });
         
